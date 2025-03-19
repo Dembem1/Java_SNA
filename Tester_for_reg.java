@@ -28,6 +28,7 @@ public class Tester_for_reg {
                 }
             }
         } catch (IOException e) {
+            e.printStackTrace();
         }
         return false;
     }
