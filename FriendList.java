@@ -9,11 +9,6 @@ public class FriendList {
     private Set<User> friends;
     private HashSet<User> hashSet;
 
-    public FriendList() {
-        friends = new HashSet<>();
-        hashSet = new HashSet<>();
-    }
-    
     static void addFriend(User u) {
         // add friend to the list
     }
