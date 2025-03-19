@@ -8,6 +8,8 @@ public class User {
     private String workplace;
     private String hometown;
     private String password;
+    private FriendList friends;
+    private PostList posts;
     
 
     public User(int userID, String username, String workplace, String hometown, String password) {
@@ -16,6 +18,8 @@ public class User {
         this.workplace = workplace;
         this.hometown = hometown;
         this.password = password;
+        this.friends = new FriendList();
+        this.posts = new PostList();
     }
 
     public int getUserID() {
@@ -38,6 +42,14 @@ public class User {
         return password;
     }
 
+    public FriendList getFriends() {
+        return friends;
+    }
+
+    public PostList getPosts() {
+        return posts;
+    }
+
     public void setUserID(int userID) {
         this.userID = userID;
     }
@@ -56,5 +68,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setFriends(FriendList friends) {
+        this.friends = friends;
+    }
+
+    public void setPosts(PostList posts) {
+        this.posts = posts;
     }
 }
