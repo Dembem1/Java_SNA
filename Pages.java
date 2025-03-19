@@ -10,6 +10,7 @@
 import java.awt.event.*;
 import javax.swing.*;
 
+
 public class Pages {
     public static void main(String[] args) {
         SingIn_Register.SingIn_Register();
@@ -49,6 +50,13 @@ class SingIn_Register {
         loginButton.setBounds(175, 350, 150, 30);
         loginButton.setBackground(new java.awt.Color(214, 204, 194));
         panel.add(loginButton);
+
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Homepage.homepage();
+            }
+        });
 
         // Create register button
         JButton registerButton = new JButton("Register");
@@ -126,4 +134,31 @@ class RegistrationInfo {
 
         frame.add(panel);
     }    
+}
+
+class Homepage {
+    static void homepage() {
+        JFrame frame = new JFrame("Homepage");
+        frame.setSize(500, 800);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+
+        JPanel panel = new JPanel();
+        panel.setBackground(new java.awt.Color(245, 235, 224));
+        panel.setLayout(null);
+        
+        frame.add(panel);
+    }
+}
+
+class FindFriends {
+    static void findFriends() {
+
+    }
+}
+
+class Profile {
+    static void profile() {
+
+    }
 }
