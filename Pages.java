@@ -7,6 +7,7 @@
 // https://www.flaticon.com/
 
 
+import java.awt.Image;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -146,7 +147,15 @@ class Homepage {
         JPanel panel = new JPanel();
         panel.setBackground(new java.awt.Color(245, 235, 224));
         panel.setLayout(null);
-        
+
+        ImageIcon homeIcon = new ImageIcon("home.png");
+        Image scaled = homeIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        homeIcon = new ImageIcon(scaled);
+
+        JButton homeButton = new JButton(homeIcon);
+        homeButton.setBounds(50, 50, 50, 50);
+        panel.add(homeButton);
+
         frame.add(panel);
     }
 }
