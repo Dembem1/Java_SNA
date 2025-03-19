@@ -2,7 +2,162 @@
 // It should store all users data in a ArrayList<User> data structure
 // Should store all data in a file and read data from a file
 // Handles user queries, friend recommendations, and file operations.
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.io.IOException;
 
 public class SocialNetwork {
-    
+    // add an arrayList to store all users
+    private ArrayList<User> users;
+
+    // constructor
+    public SocialNetwork() {
+        this.users = new ArrayList<User>();
+    }
+
+    // add a user to the list
+    public void addUser(User user) {
+        users.add(user);
+    }
+
+    // remove a user from the list
+    public void removeUser(User user) {
+        users.remove(user);
+    }
+
+    // find a user by ID
+    public User findUser(int userID) {
+        for (User user : users) {
+            if (user.getUserID() == userID) {
+                return user;
+            }
+        }
+        return null; // User not found
+    }
+
+    // find a user by username
+    public User findUser(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null; // User not found 
+    }
+
+    // display all users in the network
+    public void displayUsers() {
+        for (User user : users) {
+            System.out.println(user);
+        }
+    }
+
+    /* find mutual friends between two users
+    public void findMutualFriends(User user1, User user2) {
+        if (user1 == null || user2 == null) return; // if either user is not found
+
+        System.out.println("Mutual friends of " + user1.getName() + " and " + user2.getName() + ":");
+        for (User friend : user1.getFriendList().getFriends()) {
+            if (user2.getFriendList().isFriend(friend)) {
+                System.out.println("- " + friend.getName());
+            }
+        }
+    } */
+
+    // find friend recommendations for a user we can add it later 
+
+    // save all users data to a file
+    public void saveToFile(String filename) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+            
+            for (User user : users) {
+                // Save user info
+                writer.write(user.getUserID() + "," + user.getUsername() + "," + user.getWorkplace() + "," + user.getHometown() + "," + user.getPassword());
+                writer.newLine();
+
+                // Save friends (by userID)
+                StringBuilder friendsLine = new StringBuilder("Friends:");
+                for (User friend : user.getFriends().getFriends()) {
+                    friendsLine.append(friend.getUserID()).append(",");
+                }
+                writer.write(friendsLine.toString());
+                writer.newLine();
+
+                // Save posts
+                StringBuilder postsLine = new StringBuilder("Posts:");
+                for (Post post : user.getPosts().getPosts()) {
+                    postsLine.append(post.getPostID()).append("|")
+                    .append(post.getContent().replace(",", " ")).append("|")
+                    .append(post.getLikes()).append(";");
+                }   
+                writer.write(postsLine.toString());
+                writer.newLine();
+            }
+            System.out.println("Social network data saved successfully.");
+            
+        } catch (IOException e) {
+            System.out.println("An error occurred while saving user data.");
+        }
+    }
+
+    // load all users data from a file
+    public void loadFromFile(String filename) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
+            Map<Integer, User> userMap = new HashMap<>(); // Temporary storage to map userIDs to Users
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] userDetails = line.split(",");
+                int userID = Integer.parseInt(userDetails[0]);
+                User user = new User(userID, userDetails[1], userDetails[2], userDetails[3], userDetails[4]);
+                users.add(user);
+                userMap.put(userID, user);
+
+                // Read Friends
+                line = reader.readLine();
+                if (line.startsWith("Friends:")) {
+                    String[] friends = line.substring(8).split(",");
+                    for (String friendID : friends) {
+                        if (!friendID.isEmpty()) {
+                            int fID = Integer.parseInt(friendID);
+                            if (userMap.containsKey(fID)) {
+                                user.getFriends().addFriend(userMap.get(fID));
+                            }
+                        }
+                    }
+                }
+
+                // Read Posts
+                line = reader.readLine();
+                if (line.startsWith("Posts:")) {
+                    String[] posts = line.substring(6).split(";");
+                    for (String postData : posts) {
+                        if (!postData.isEmpty()) {
+                            String[] postParts = postData.split("\\|");
+                            int postID = Integer.parseInt(postParts[0]);
+                            String content = postParts[1];
+                            int likes = Integer.parseInt(postParts[2]);
+                            Post post = new Post(postID, content);
+                            for (int i = 0; i < likes; i++) {
+                                post.setLikes(likes); // Restore likes
+                            }
+                            user.getPosts().addPost(post);
+                        }
+                    }
+                }
+            }
+            System.out.println("Social network data loaded successfully.");
+            
+        } catch (IOException e) {
+            System.out.println("Error loading data from file.");
+            e.printStackTrace();
+        }
+    }
 }

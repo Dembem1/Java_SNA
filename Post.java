@@ -33,6 +33,17 @@ public class Post {
         return likes;
     }
 
+    // set methods
+    public void setPostID(int postID) {
+        this.postID = postID;
+    }
+    public void setContent(String content) {
+        this.content = content;
+    }
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
     // main methods
     public void addLike(){
         likes++;

@@ -13,6 +13,11 @@ public class PostList {
         posts = new LinkedList<Post>();
     }
     
+    // get posts
+    public LinkedList<Post> getPosts(){
+        return posts;
+    }
+    
     // add post method
     public void addPost(Post p){
         posts.add(p);
