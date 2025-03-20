@@ -69,18 +69,15 @@ public class SocialNetwork {
         }
     } */
 
-    // find friend recommendations for a user we can add it later 
-
     // save all users data to a file
     public void saveToFile(String filename) {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
-            
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             for (User user : users) {
                 // Save user info
-                writer.write(user.getUserID() + "," + user.getUsername() + "," + user.getWorkplace() + "," + user.getHometown() + "," + user.getPassword());
+                writer.write(user.getUserID() + "," + user.getUsername() + "," + 
+                             user.getWorkplace() + "," + user.getHometown() + "," + user.getPassword());
                 writer.newLine();
-
+    
                 // Save friends (by userID)
                 StringBuilder friendsLine = new StringBuilder("Friends:");
                 for (User friend : user.getFriends().getFriends()) {
@@ -88,23 +85,24 @@ public class SocialNetwork {
                 }
                 writer.write(friendsLine.toString());
                 writer.newLine();
-
+    
                 // Save posts
                 StringBuilder postsLine = new StringBuilder("Posts:");
                 for (Post post : user.getPosts().getPosts()) {
                     postsLine.append(post.getPostID()).append("|")
-                    .append(post.getContent().replace(",", " ")).append("|")
-                    .append(post.getLikes()).append(";");
-                }   
+                            .append(post.getContent().replace(",", " ")).append("|")
+                            .append(post.getLikes()).append(";");
+                }
                 writer.write(postsLine.toString());
                 writer.newLine();
             }
+            writer.flush();  // Make sure data is written before closing
             System.out.println("Social network data saved successfully.");
-            
         } catch (IOException e) {
             System.out.println("An error occurred while saving user data.");
+            e.printStackTrace();
         }
-    }
+    }    
 
     // load all users data from a file
     public void loadFromFile(String filename) {

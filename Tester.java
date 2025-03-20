@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Tester {
     // testing post and postList classes
     public static void main(String[] args) {
-        // create a post using constructor 2
+        /* create a post using constructor 2
         Post p1 = new Post(1, "Hello, this is my first post");
 
         // display post
@@ -132,6 +132,49 @@ public class Tester {
                     System.out.println("Invalid choice. Please choose between 1 and 5.");
 
             }
-        }
+        } */
+
+        SocialNetwork network = new SocialNetwork();
+        String filename = "social_network_data.txt";
+
+        // Load existing data from file
+        network.loadFromFile(filename);
+
+        // Create test users
+        User user1 = new User(1, "Alex", "Socialise Yourself", "Spain", "password123");
+        User user2 = new User(2, "Sasha", "Pinterest", "Thai", "Vadimpass");
+        User user3 = new User(3, "Olivia", "Google", "Prague", "charliepass");
+
+        // Add users to the network
+        network.addUser(user1);
+        network.addUser(user2);
+        network.addUser(user3);
+
+        // Establish friendships
+        user1.getFriends().addFriend(user2);
+        user2.getFriends().addFriend(user3);
+
+        // Add posts
+        Post post1 = new Post(101, "Hello, world");
+        Post post2 = new Post(102, "Excited to join this network");
+        Post post3 = new Post(103, "Just had a great day");
+
+        user1.getPosts().addPost(post1);
+        user2.getPosts().addPost(post2);
+        user3.getPosts().addPost(post3);
+
+        // Like posts
+        post1.addLike();
+        post2.addLike();
+        post2.addLike();
+
+        // Display all users
+        System.out.println("Users in the network:");
+        network.displayUsers();
+
+        // Save updated data to file
+        network.saveToFile(filename);
+        
+        System.out.println("Testing complete. Data saved to file.");
     }
 }
