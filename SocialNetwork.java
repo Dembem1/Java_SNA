@@ -70,8 +70,8 @@ public class SocialNetwork {
     } */
 
     // save all users data to a file
-    public void saveToFile(String filename) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+    public boolean saveToFile(String filename, int ID, String username, String workplace, String hometown, String password) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
             for (User user : users) {
                 // Save user info
                 writer.write(user.getUserID() + "," + user.getUsername() + "," + 
@@ -97,11 +97,13 @@ public class SocialNetwork {
                 writer.newLine();
             }
             writer.flush();  // Make sure data is written before closing
-            System.out.println("Social network data saved successfully.");
+            return true;
+            //System.out.println("Social network data saved successfully.");
         } catch (IOException e) {
             System.out.println("An error occurred while saving user data.");
             e.printStackTrace();
         }
+                return false;
     }    
 
     // load all users data from a file
@@ -171,6 +173,39 @@ public class SocialNetwork {
             }
         } catch (IOException e) {
             System.out.println("An error occurred while checking user existence.");
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean isUsernameValid(String filename, String username) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] userDetails = line.split(",");
+                if (userDetails.length > 1 && userDetails[1].equals(username)) {
+                    System.out.println("Username already exists.");
+                    return false;
+                } else {
+                    System.out.println("Username is valid.");
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean saveUserToFile(String fileName, int ID, String username, String hometown, String workplace, String password) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
+            writer.newLine();
+            writer.write(ID + "," + username + "," + hometown + "," + workplace + "," + password);
+            writer.newLine();
+            writer.flush();
+            return true;
+        } catch (IOException e) {
+            System.out.println("An error occurred while saving user data.");
             e.printStackTrace();
         }
         return false;
