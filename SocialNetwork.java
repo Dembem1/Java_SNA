@@ -166,7 +166,7 @@ public class SocialNetwork {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] userDetails = line.split(",");
-                if (userDetails[1].equals(username) && userDetails[5].equals(password)) {
+                if (userDetails.length > 1 && userDetails[1].equals(username) && userDetails[4].equals(password)) {
                     System.out.println("User exists.");
                     return true;
                 }
@@ -206,6 +206,23 @@ public class SocialNetwork {
             return true;
         } catch (IOException e) {
             System.out.println("An error occurred while saving user data.");
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean searchUser(String filename, String username) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] userDetails = line.split(",");
+                if (userDetails.length > 1 && userDetails[1].equals(username)) {
+                    System.out.println("User found.");
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred while searching for user.");
             e.printStackTrace();
         }
         return false;
