@@ -158,4 +158,21 @@ public class SocialNetwork {
             e.printStackTrace();
         }
     }
+
+    public boolean isUserExist(String username, String password) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("social_network_data.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] userDetails = line.split(",");
+                if (userDetails[1].equals(username) && userDetails[5].equals(password)) {
+                    System.out.println("User exists.");
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred while checking user existence.");
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
