@@ -241,7 +241,9 @@ class Homepage {
         frame.add(panel);
     }
 }
-
+//###############################################################################
+//######################## FIND FRIENDS #########################################
+//###############################################################################
 class FindFriends {
     static void findFriends() {
         JFrame frame = new JFrame("Find Friends");
@@ -280,8 +282,103 @@ class FindFriends {
         searchButton.setContentAreaFilled(false);
         searchButton.setFocusPainted(false);
         searchButton.setOpaque(false);
+        final String[] result = {""};
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SocialNetwork socialNetwork = new SocialNetwork();
+                if (socialNetwork.searchUser("social_network_data.txt", searchField.getText())) {
+                    result[0] = "Found";
+                    JOptionPane.showMessageDialog(frame, "User found", "Success", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    result[0] = "Not found";
+                    JOptionPane.showMessageDialog(frame, "User not found", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
         panel.add(searchButton);
 
+        JPanel foundUsers = new JPanel();
+        foundUsers.setBounds(50, 70, 400, 600);
+        foundUsers.setBackground(new java.awt.Color(227, 113, 202));
+        frame.add(foundUsers);
+
+        JTextArea user1 = new JTextArea("User 1");
+        user1.setBounds(50, 70, 400, 100);
+        user1.setBackground(new java.awt.Color(227, 213, 202));
+        user1.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (result[0].equals("Found")) {
+                    user1.setText("Found");
+                } else {
+                    user1.setText("Not found");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                user1.setBackground(new java.awt.Color(227, 213, 202));
+            }
+        });
+        foundUsers.add(user1);
+
+        ImageIcon homeIcon = new ImageIcon("Icons/home.png");
+        JButton homeButton = new JButton(homeIcon);
+        homeButton.setBounds(50, 700, 25, 25);
+        homeButton.setBorderPainted(false);
+        homeButton.setContentAreaFilled(false);
+        homeButton.setFocusPainted(false);
+        homeButton.setOpaque(false);
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Homepage.homepage();
+                frame.dispose();
+            }
+        });
+        panel.add(homeButton);
+
+        ImageIcon findFriendsIcon = new ImageIcon("Icons/findFriends.png");
+        JButton findFriendsButton = new JButton(findFriendsIcon);
+        findFriendsButton.setBounds(150, 700, 25, 25);
+        findFriendsButton.setBorderPainted(false);
+        findFriendsButton.setContentAreaFilled(false);
+        findFriendsButton.setFocusPainted(false);
+        findFriendsButton.setOpaque(false);
+        panel.add(findFriendsButton);
+
+        ImageIcon addPostIcon = new ImageIcon("Icons/addPost.png");
+        JButton addPostButton = new JButton(addPostIcon);
+        addPostButton.setBounds(250, 700, 25, 25);
+        addPostButton.setBorderPainted(false);
+        addPostButton.setContentAreaFilled(false);
+        addPostButton.setFocusPainted(false);
+        addPostButton.setOpaque(false);
+        addPostButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddPost.addPost();
+                frame.dispose();
+            }
+        });
+        panel.add(addPostButton);
+
+        ImageIcon userProfileIcon = new ImageIcon("Icons/userProfile.png");
+        JButton userProfileButton = new JButton(userProfileIcon);
+        userProfileButton.setBounds(350, 700, 25, 25);
+        userProfileButton.setBorderPainted(false);
+        userProfileButton.setContentAreaFilled(false);
+        userProfileButton.setFocusPainted(false);
+        userProfileButton.setOpaque(false);
+        userProfileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Profile.profile();
+                frame.dispose();
+            }
+        });
+        panel.add(userProfileButton);
         frame.add(panel);
     }
 }
