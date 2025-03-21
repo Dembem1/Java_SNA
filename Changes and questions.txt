@@ -1,2 +1,0 @@
-1. Add post header
-2. SocialNetwork - We need make txt file with list of user and save each user that test?
