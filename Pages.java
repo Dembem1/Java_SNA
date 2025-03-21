@@ -141,6 +141,27 @@ class RegistrationInfo {
         JButton registerButton = new JButton("Register");
         registerButton.setBounds(175, 400, 150, 30);
         registerButton.setBackground(new java.awt.Color(214, 204, 194));
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = userText.getText();
+                String password = new String(passwordField.getPassword());
+                String workplace = workplaceText.getText();
+                String hometown = hometownText.getText();
+
+                SocialNetwork socialNetwork = new SocialNetwork();
+                if (socialNetwork.isUsernameValid("social_network_data.txt", username)) {
+                    if (socialNetwork.saveUserToFile("social_network_data.txt", 1, username, workplace, hometown, password)) {
+                        Homepage.homepage();
+                        frame.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Failed to register", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Username already exists", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
         panel.add(registerButton);
 
         frame.add(panel);
