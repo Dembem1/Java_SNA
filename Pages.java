@@ -6,18 +6,17 @@
 // https://icons8.com/icons
 // https://www.flaticon.com/
 
-
-import java.awt.Image;
 import java.awt.event.*;
 import javax.swing.*;
-
 
 public class Pages {
     public static void main(String[] args) {
         SingIn_Register.SingIn_Register();
     }
 }
-
+//###############################################################################
+//######################## SING IN AND REGISTER PAGES ###########################
+//###############################################################################
 class SingIn_Register {
     static void SingIn_Register() {
         JFrame frame = new JFrame("Registration Page");
@@ -55,7 +54,15 @@ class SingIn_Register {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Homepage.homepage();
+                String username = userText.getText();
+                String password = new String(passwordField.getPassword());
+                SocialNetwork socialNetwork = new SocialNetwork();
+                if (socialNetwork.isUserExist(username, password)) {
+                    Homepage.homepage();
+                    frame.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
@@ -73,6 +80,7 @@ class SingIn_Register {
             @Override
             public void actionPerformed(ActionEvent e) {
                 RegistrationInfo.registrationInfo();
+                frame.dispose();
             }
         });
 
@@ -83,7 +91,9 @@ class SingIn_Register {
         frame.setVisible(true);
     }
 }
-
+//###############################################################################
+//######################## REGISTRATION PAGE ####################################
+//###############################################################################
 class RegistrationInfo {
     static void registrationInfo() {
         JFrame frame = new JFrame("Registration Page");
@@ -136,7 +146,9 @@ class RegistrationInfo {
         frame.add(panel);
     }    
 }
-
+//###############################################################################
+//######################## HOMEPAGE #############################################
+//###############################################################################
 class Homepage {
     static void homepage() {
         JFrame frame = new JFrame("Homepage");
@@ -148,13 +160,62 @@ class Homepage {
         panel.setBackground(new java.awt.Color(245, 235, 224));
         panel.setLayout(null);
 
-        ImageIcon homeIcon = new ImageIcon("home.png");
-        Image scaled = homeIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        homeIcon = new ImageIcon(scaled);
-
+        ImageIcon homeIcon = new ImageIcon("Icons/home.png");
         JButton homeButton = new JButton(homeIcon);
-        homeButton.setBounds(50, 50, 50, 50);
+        homeButton.setBounds(50, 700, 25, 25);
+        homeButton.setBorderPainted(false);
+        homeButton.setContentAreaFilled(false);
+        homeButton.setFocusPainted(false);
+        homeButton.setOpaque(false);
         panel.add(homeButton);
+
+        ImageIcon findFriendsIcon = new ImageIcon("Icons/findFriends.png");
+        JButton findFriendsButton = new JButton(findFriendsIcon);
+        findFriendsButton.setBounds(150, 700, 25, 25);
+        findFriendsButton.setBorderPainted(false);
+        findFriendsButton.setContentAreaFilled(false);
+        findFriendsButton.setFocusPainted(false);
+        findFriendsButton.setOpaque(false);
+        findFriendsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FindFriends.findFriends();
+                frame.dispose();
+            }
+        });
+        panel.add(findFriendsButton);
+
+        ImageIcon addPostIcon = new ImageIcon("Icons/addPost.png");
+        JButton addPostButton = new JButton(addPostIcon);
+        addPostButton.setBounds(250, 700, 25, 25);
+        addPostButton.setBorderPainted(false);
+        addPostButton.setContentAreaFilled(false);
+        addPostButton.setFocusPainted(false);
+        addPostButton.setOpaque(false);
+        addPostButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddPost.addPost();
+                frame.dispose();
+            }
+        });
+        panel.add(addPostButton);
+
+        ImageIcon userProfileIcon = new ImageIcon("Icons/userProfile.png");
+        JButton userProfileButton = new JButton(userProfileIcon);
+        userProfileButton.setBounds(350, 700, 25, 25);
+        userProfileButton.setBorderPainted(false);
+        userProfileButton.setContentAreaFilled(false);
+        userProfileButton.setFocusPainted(false);
+        userProfileButton.setOpaque(false);
+        userProfileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Profile.profile();
+                frame.dispose();
+            }
+        });
+        panel.add(userProfileButton);
 
         frame.add(panel);
     }
@@ -162,6 +223,50 @@ class Homepage {
 
 class FindFriends {
     static void findFriends() {
+        JFrame frame = new JFrame("Find Friends");
+        frame.setSize(500, 800);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+
+        JPanel panel = new JPanel();
+        panel.setBackground(new java.awt.Color(245, 235, 224));
+        panel.setLayout(null);
+
+        JTextField searchField = new JTextField("Search");
+        searchField.setBounds(50, 50, 200, 25);
+        searchField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (searchField.getText().equals("Search")) {
+                    searchField.setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (searchField.getText().isEmpty()) {
+                    searchField.setText("Search");
+                    
+                }
+            }
+        });
+        panel.add(searchField);
+
+        ImageIcon searchIcon = new ImageIcon("Icons/search.png");
+        JButton searchButton = new JButton(searchIcon);
+        searchButton.setBounds(250, 50, 25, 25);
+        searchButton.setBorderPainted(false);
+        searchButton.setContentAreaFilled(false);
+        searchButton.setFocusPainted(false);
+        searchButton.setOpaque(false);
+        panel.add(searchButton);
+
+        frame.add(panel);
+    }
+}
+
+class AddPost {
+    static void addPost() {
 
     }
 }
