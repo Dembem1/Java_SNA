@@ -1,4 +1,4 @@
-1,username1,Socialise,Yourself,Spain,password1
+1,username1,Socialise,Spain,password1
 Friends:
 Posts:101|Hello  world!|1;
 2,Sasha,Pinterest,Thai,Vadimpass
@@ -7,4 +7,4 @@ Posts:102|Excited to join this network|2;
 3,Olivia,Google,Prague,charliepass
 Friends:
 Posts:103|Just had a great day|0;
-
+1,Den,School,Kirk,123
