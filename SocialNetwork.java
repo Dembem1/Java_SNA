@@ -211,20 +211,20 @@ public class SocialNetwork {
         return false;
     }
 
-    public boolean searchUser(String filename, String username) {
+    public String[] searchUser(String filename, String username) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] userDetails = line.split(",");
                 if (userDetails.length > 1 && userDetails[1].equals(username)) {
                     System.out.println("User found.");
-                    return true;
+                    return new String[]{userDetails[0], userDetails[1], userDetails[2], userDetails[3], userDetails[4]};
                 }
             }
         } catch (IOException e) {
             System.out.println("An error occurred while searching for user.");
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 }
