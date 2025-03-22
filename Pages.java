@@ -275,6 +275,11 @@ class FindFriends {
         });
         panel.add(searchField);
 
+        JTextArea user1 = new JTextArea("");
+        user1.setBounds(50, 70, 400, 100);
+        user1.setBackground(new java.awt.Color(227, 213, 202));
+        panel.add(user1);
+
         ImageIcon searchIcon = new ImageIcon("Icons/search.png");
         JButton searchButton = new JButton(searchIcon);
         searchButton.setBounds(250, 50, 25, 25);
@@ -282,46 +287,24 @@ class FindFriends {
         searchButton.setContentAreaFilled(false);
         searchButton.setFocusPainted(false);
         searchButton.setOpaque(false);
-        final String[] result = {""};
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SocialNetwork socialNetwork = new SocialNetwork();
                 if (socialNetwork.searchUser("social_network_data.txt", searchField.getText())) {
-                    result[0] = "Found";
+                    user1.setText("User found");
                     JOptionPane.showMessageDialog(frame, "User found", "Success", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    result[0] = "Not found";
+                    user1.setText("User not found");
                     JOptionPane.showMessageDialog(frame, "User not found", "Error", JOptionPane.ERROR_MESSAGE);
                 }
+                user1.revalidate();
+                user1.repaint();
             }
         });
         panel.add(searchButton);
 
-        JPanel foundUsers = new JPanel();
-        foundUsers.setBounds(50, 70, 400, 600);
-        foundUsers.setBackground(new java.awt.Color(227, 113, 202));
-        frame.add(foundUsers);
-
-        JTextArea user1 = new JTextArea("User 1");
-        user1.setBounds(50, 70, 400, 100);
-        user1.setBackground(new java.awt.Color(227, 213, 202));
-        user1.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (result[0].equals("Found")) {
-                    user1.setText("Found");
-                } else {
-                    user1.setText("Not found");
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                user1.setBackground(new java.awt.Color(227, 213, 202));
-            }
-        });
-        foundUsers.add(user1);
+  
 
         ImageIcon homeIcon = new ImageIcon("Icons/home.png");
         JButton homeButton = new JButton(homeIcon);
