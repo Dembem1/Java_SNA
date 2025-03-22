@@ -283,15 +283,16 @@ class FindFriends {
         searchButton.setFocusPainted(false);
         searchButton.setOpaque(false);
         final String[] result = {""};
-        searchButton.addActionListener(new ActionListener() {
-            @Override
+       searchButton.addActionListener(new ActionListener() {
+    @Override
             public void actionPerformed(ActionEvent e) {
                 SocialNetwork socialNetwork = new SocialNetwork();
-                if (socialNetwork.searchUser("social_network_data.txt", searchField.getText())) {
-                    result[0] = "Found";
-                    JOptionPane.showMessageDialog(frame, "User found", "Success", JOptionPane.INFORMATION_MESSAGE);
+                String userInfo = socialNetwork.searchUser("social_network_data.txt", searchField.getText());
+        
+                if (!userInfo.equals("User not found.")) {
+                    JOptionPane.showMessageDialog(frame, userInfo, "User Found", JOptionPane.INFORMATION_MESSAGE);
+                    user1.setText(userInfo); // Update JTextArea with user details
                 } else {
-                    result[0] = "Not found";
                     JOptionPane.showMessageDialog(frame, "User not found", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
