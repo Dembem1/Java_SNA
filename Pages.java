@@ -275,10 +275,17 @@ class FindFriends {
         });
         panel.add(searchField);
 
-        JTextArea user1 = new JTextArea("");
-        user1.setBounds(50, 70, 400, 100);
-        user1.setBackground(new java.awt.Color(227, 213, 202));
-        panel.add(user1);
+        JTextArea userArea = new JTextArea("");
+        userArea.setBounds(50, 70, 100, 100);
+        userArea.setBackground(new java.awt.Color(227, 213, 202));
+        userArea.setEditable(false);
+        panel.add(userArea);
+
+        JTextArea userDetailArea = new JTextArea("");
+        userDetailArea.setBounds(50, 170, 100, 100);
+        userDetailArea.setBackground(new java.awt.Color(227, 213, 202));
+        userDetailArea.setEditable(false);
+        panel.add(userDetailArea);
 
         ImageIcon searchIcon = new ImageIcon("Icons/search.png");
         JButton searchButton = new JButton(searchIcon);
@@ -291,15 +298,26 @@ class FindFriends {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SocialNetwork socialNetwork = new SocialNetwork();
-                if (socialNetwork.searchUser("social_network_data.txt", searchField.getText())) {
-                    user1.setText("User found");
-                    JOptionPane.showMessageDialog(frame, "User found", "Success", JOptionPane.INFORMATION_MESSAGE);
+                String searchUsername = searchField.getText();
+                String[] userDetails = socialNetwork.searchUser("social_network_data.txt", searchUsername);
+                if (!userDetails.equals("User not found")) {
+                    userArea.setText(userDetails[1]);
+                    userDetailArea.setText(
+                        userDetails[0] + 
+                        userDetails[2] + 
+                        userDetails[3] + 
+                        userDetails[4]
+                    );
+                    //JOptionPane.showMessageDialog(frame, "User found", "Success", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    user1.setText("User not found");
-                    JOptionPane.showMessageDialog(frame, "User not found", "Error", JOptionPane.ERROR_MESSAGE);
+                    userArea.setText("User not found");
+                    userDetailArea.setText("No user info");
+                    //JOptionPane.showMessageDialog(frame, "User not found", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                user1.revalidate();
-                user1.repaint();
+                userArea.revalidate();
+                userArea.repaint();
+                userDetailArea.revalidate();
+                userDetailArea.repaint();
             }
         });
         panel.add(searchButton);
