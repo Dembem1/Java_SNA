@@ -227,4 +227,29 @@ public class SocialNetwork {
         }
         return null;
     }
+
+    public String[] showPost(String filename, String username) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            boolean userFound = false;
+            while ((line = reader.readLine()) != null) {
+                String[] userDetails = line.split(",");
+                if (userDetails.length > 1 && userDetails[1].equals(username)) {
+                    System.out.println("User Found");
+                    userFound = true;
+                    return new String[]{userDetails[1]};
+                }
+
+                if (userFound && line.startsWith("Posts:")) {
+                    String[] userPosts = line.split("|");
+                    if (userPosts.length > 1) {
+                        return new String[]{userPosts[0], userPosts[1], userPosts[2]};
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new String[]{"User or posts not found"};
+    }
 }
