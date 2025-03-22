@@ -181,6 +181,23 @@ class Homepage {
         panel.setBackground(new java.awt.Color(245, 235, 224));
         panel.setLayout(null);
 
+        JTextArea userName = new JTextArea();
+        userName.setBounds(50, 100, 50, 30);
+        userName.setBackground(new java.awt.Color(200, 200, 200));
+        userName.setEditable(false);
+        panel.add(userName);
+
+        JTextField postContent = new JTextField();
+        postContent.setBounds(50, 200, 50, 100);
+        postContent.setBackground(new java.awt.Color(190, 190, 190));
+        postContent.setEditable(false);
+        postContent.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        panel.add(postContent);
+
         ImageIcon homeIcon = new ImageIcon("Icons/home.png");
         JButton homeButton = new JButton(homeIcon);
         homeButton.setBounds(50, 700, 25, 25);
