@@ -406,10 +406,86 @@ class FindFriends {
         frame.add(panel);
     }
 }
-
+//################################################################
+//################## ADD POST PAGE ###############################
+//################################################################
 class AddPost {
     static void addPost() {
+        JFrame frame = new JFrame();
+        frame.setSize(500, 800);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
 
+        JPanel panel = new JPanel();
+        panel.setBackground(new java.awt.Color(245, 235, 224));
+        panel.setLayout(null);
+        frame.add(panel);
+
+        JTextField postInfo = new JTextField();
+        postInfo.setBounds(50, 100, 50, 30);
+        postInfo.setBackground(new java.awt.Color(200, 200, 200));
+        panel.add(postInfo);
+
+        JButton uploadPost = new JButton();
+        uploadPost.setBounds(50, 120, 50, 50);
+        uploadPost.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String postInformation = postInfo.getText();
+                
+            }
+        });
+        panel.add(uploadPost);
+
+        ImageIcon homeIcon = new ImageIcon("Icons/home.png");
+        JButton homeButton = new JButton(homeIcon);
+        homeButton.setBounds(50, 700, 25, 25);
+        homeButton.setBorderPainted(false);
+        homeButton.setContentAreaFilled(false);
+        homeButton.setFocusPainted(false);
+        homeButton.setOpaque(false);
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Homepage.homepage();
+                frame.dispose();
+            }
+        });
+        panel.add(homeButton);
+
+        ImageIcon findFriendsIcon = new ImageIcon("Icons/findFriends.png");
+        JButton findFriendsButton = new JButton(findFriendsIcon);
+        findFriendsButton.setBounds(150, 700, 25, 25);
+        findFriendsButton.setBorderPainted(false);
+        findFriendsButton.setContentAreaFilled(false);
+        findFriendsButton.setFocusPainted(false);
+        findFriendsButton.setOpaque(false);
+        panel.add(findFriendsButton);
+
+        ImageIcon addPostIcon = new ImageIcon("Icons/addPost.png");
+        JButton addPostButton = new JButton(addPostIcon);
+        addPostButton.setBounds(250, 700, 25, 25);
+        addPostButton.setBorderPainted(false);
+        addPostButton.setContentAreaFilled(false);
+        addPostButton.setFocusPainted(false);
+        addPostButton.setOpaque(false);
+        panel.add(addPostButton);
+
+        ImageIcon userProfileIcon = new ImageIcon("Icons/userProfile.png");
+        JButton userProfileButton = new JButton(userProfileIcon);
+        userProfileButton.setBounds(350, 700, 25, 25);
+        userProfileButton.setBorderPainted(false);
+        userProfileButton.setContentAreaFilled(false);
+        userProfileButton.setFocusPainted(false);
+        userProfileButton.setOpaque(false);
+        userProfileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Profile.profile();
+                frame.dispose();
+            }
+        });
+        panel.add(userProfileButton);
     }
 }
 
