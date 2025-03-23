@@ -8,7 +8,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
+import javax.swing.JTextArea;
+
 import java.io.IOException;
 
 public class SocialNetwork {
@@ -227,29 +232,36 @@ public class SocialNetwork {
         }
         return null;
     }
+    
+    public String[] getRandomUserPost(String filename) {
+        List<String[]> userPosts = new ArrayList<>();
 
-    public String[] showPost(String filename, String username) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
-            boolean userFound = false;
+            String currentUser = null;
+
             while ((line = reader.readLine()) != null) {
                 String[] userDetails = line.split(",");
-                if (userDetails.length > 1 && userDetails[1].equals(username)) {
-                    System.out.println("User Found");
-                    userFound = true;
-                    return new String[]{userDetails[1]};
+                if (userDetails.length > 1) {
+                    currentUser = userDetails[1]; // Get username from 2nd column
                 }
 
-                if (userFound && line.startsWith("Posts:")) {
-                    String[] userPosts = line.split("|");
-                    if (userPosts.length > 1) {
-                        return new String[]{userPosts[0], userPosts[1], userPosts[2]};
+                if (currentUser != null && line.startsWith("Posts:")) {
+                    String[] postDetails = line.split("\\|");
+                    if (postDetails.length > 1) {
+                        userPosts.add(new String[]{currentUser, postDetails[1]}); // Username and Post
                     }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new String[]{"User or posts not found"};
+
+        if (userPosts.isEmpty()) {
+            return new String[]{"No users found", ""};
+        }
+
+        Random random = new Random();
+        return userPosts.get(random.nextInt(userPosts.size())); // Pick a random user post
     }
 }
