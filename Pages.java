@@ -181,7 +181,7 @@ class Homepage {
         panel.setBackground(new java.awt.Color(245, 235, 224));
         panel.setLayout(null);
 
-        JTextArea userName = new JTextArea();
+        JTextField userName = new JTextField();
         userName.setBounds(50, 100, 50, 30);
         userName.setBackground(new java.awt.Color(200, 200, 200));
         userName.setEditable(false);
@@ -191,12 +191,18 @@ class Homepage {
         postContent.setBounds(50, 200, 50, 100);
         postContent.setBackground(new java.awt.Color(190, 190, 190));
         postContent.setEditable(false);
-        postContent.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
         panel.add(postContent);
+
+        SocialNetwork socialNetwork = new SocialNetwork();
+        String[] randomUserInfo = socialNetwork.getRandomUserPost("social_network_data.txt");
+
+        if (randomUserInfo.length > 1) {
+            userName.setText(randomUserInfo[0]);   // Set username
+            postContent.setText(randomUserInfo[1]); // Set post content
+        } else {
+            userName.setText("No users found");
+            postContent.setText("");
+        }
 
         ImageIcon homeIcon = new ImageIcon("Icons/home.png");
         JButton homeButton = new JButton(homeIcon);
