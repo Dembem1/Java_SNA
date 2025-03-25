@@ -45,6 +45,9 @@ public class SocialNetwork {
         return null; // User not found
     }
 
+    // get userID
+    
+
     // find a user by username
     public User findUser(String username) {
         for (User user : users) {
@@ -117,6 +120,7 @@ public class SocialNetwork {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
             Map<Integer, User> userMap = new HashMap<>(); // Temporary storage to map userIDs to Users
             String line;
+            int maxUserID = 0; // Track the highest user ID
 
             while ((line = reader.readLine()) != null) {
                 String[] userDetails = line.split(",");
@@ -125,9 +129,9 @@ public class SocialNetwork {
                 users.add(user);
                 userMap.put(userID, user);
 
-                // ensure userIDCounter is greater than the last userID
-                if (userID >= userIdCounter) {
-                    userIdCounter = userID + 1;
+                // Keep track of the highest userID
+                if (userID > maxUserID) {
+                    maxUserID = userID;
                 }
 
                 // Read Friends
@@ -163,6 +167,9 @@ public class SocialNetwork {
                     }
                 }
             }
+            // Set userIdCounter to the next available ID
+            userIdCounter = maxUserID + 1;
+
             System.out.println("Data loaded successfully.");
             
         } catch (IOException e) {
@@ -209,8 +216,9 @@ public class SocialNetwork {
 
     public boolean saveUserToFile(String fileName, String username, String hometown, String workplace, String password) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
-            // assign the next available ID
-            int userID = userIdCounter;
+            int lastID = getLastUserID(fileName); // Get last used ID
+            int userID = lastID + 1; // Assign next available ID
+            
             writer.newLine();
             writer.write(userID + "," + username + "," + hometown + "," + workplace + "," + password);
             writer.newLine();
@@ -223,6 +231,37 @@ public class SocialNetwork {
         }
         return false;
     }
+
+    // get last user ID from the file
+    private int getLastUserID(String fileName) {
+        int maxID = 0;
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty() || !line.contains(",")) continue; // Ignore empty lines
+                
+                String[] userDetails = line.split(",");
+                if (userDetails.length >= 1) {
+                    try {
+                        int userID = Integer.parseInt(userDetails[0]);
+                        if (userID > maxID) {
+                            maxID = userID;
+                        }
+                    } catch (NumberFormatException e) {
+                        // Ignore invalid ID lines
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading user file to get last ID.");
+            e.printStackTrace();
+        }
+        
+        return maxID;
+    }
+    
 
     public String[] searchUser(String filename, String username) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
@@ -271,5 +310,62 @@ public class SocialNetwork {
 
         Random random = new Random();
         return userPosts.get(random.nextInt(userPosts.size())); // Pick a random user post
+    }
+
+    public static void savePostToFile(String fileName, int userID, String postContent) {
+        List<String> fileLines = new ArrayList<>();
+        int maxPostID = 0;
+
+        // Read file and store lines in a list
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                fileLines.add(line);
+
+                // Find the highest post ID to ensure unique IDs
+                if (line.startsWith("Posts:")) {
+                    String[] posts = line.substring(6).split(";");
+                    for (String postData : posts) {
+                        if (!postData.isEmpty()) {
+                            String[] postParts = postData.split("\\|");
+                            int postID = Integer.parseInt(postParts[0]);
+                            maxPostID = Math.max(maxPostID, postID);
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading the file.");
+            e.printStackTrace();
+            return;
+        }
+
+        // Rewrite file with new post added
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            for (int i = 0; i < fileLines.size(); i++) {
+                String line = fileLines.get(i);
+                writer.write(line);
+                writer.newLine();
+
+                // If we find the user's section, add the post after it
+                if (line.startsWith(userID + ",")) {
+                    if (i + 1 < fileLines.size() && fileLines.get(i + 1).startsWith("Posts:")) {
+                        // Append new post to existing "Posts:" section
+                        String updatedPosts = fileLines.get(i + 1) + (maxPostID + 1) + "|" + postContent.replace(",", " ") + "|0;";
+                        writer.write(updatedPosts);
+                        writer.newLine();
+                        i++; // Skip old posts line
+                    } else {
+                        // If no "Posts:" section exists, create one
+                        writer.write("Posts:" + (maxPostID + 1) + "|" + postContent.replace(",", " ") + "|0;");
+                        writer.newLine();
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error writing to file.");
+            e.printStackTrace();
+        }
     }
 }
