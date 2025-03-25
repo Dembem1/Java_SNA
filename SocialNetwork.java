@@ -45,6 +45,9 @@ public class SocialNetwork {
         return null; // User not found
     }
 
+    // get userID
+    
+
     // find a user by username
     public User findUser(String username) {
         for (User user : users) {
@@ -307,5 +310,62 @@ public class SocialNetwork {
 
         Random random = new Random();
         return userPosts.get(random.nextInt(userPosts.size())); // Pick a random user post
+    }
+
+    public static void savePostToFile(String fileName, int userID, String postContent) {
+        List<String> fileLines = new ArrayList<>();
+        int maxPostID = 0;
+
+        // Read file and store lines in a list
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                fileLines.add(line);
+
+                // Find the highest post ID to ensure unique IDs
+                if (line.startsWith("Posts:")) {
+                    String[] posts = line.substring(6).split(";");
+                    for (String postData : posts) {
+                        if (!postData.isEmpty()) {
+                            String[] postParts = postData.split("\\|");
+                            int postID = Integer.parseInt(postParts[0]);
+                            maxPostID = Math.max(maxPostID, postID);
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading the file.");
+            e.printStackTrace();
+            return;
+        }
+
+        // Rewrite file with new post added
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            for (int i = 0; i < fileLines.size(); i++) {
+                String line = fileLines.get(i);
+                writer.write(line);
+                writer.newLine();
+
+                // If we find the user's section, add the post after it
+                if (line.startsWith(userID + ",")) {
+                    if (i + 1 < fileLines.size() && fileLines.get(i + 1).startsWith("Posts:")) {
+                        // Append new post to existing "Posts:" section
+                        String updatedPosts = fileLines.get(i + 1) + (maxPostID + 1) + "|" + postContent.replace(",", " ") + "|0;";
+                        writer.write(updatedPosts);
+                        writer.newLine();
+                        i++; // Skip old posts line
+                    } else {
+                        // If no "Posts:" section exists, create one
+                        writer.write("Posts:" + (maxPostID + 1) + "|" + postContent.replace(",", " ") + "|0;");
+                        writer.newLine();
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error writing to file.");
+            e.printStackTrace();
+        }
     }
 }
