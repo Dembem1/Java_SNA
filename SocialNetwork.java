@@ -117,6 +117,7 @@ public class SocialNetwork {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
             Map<Integer, User> userMap = new HashMap<>(); // Temporary storage to map userIDs to Users
             String line;
+            int maxUserID = 0; // Track the highest user ID
 
             while ((line = reader.readLine()) != null) {
                 String[] userDetails = line.split(",");
@@ -125,9 +126,9 @@ public class SocialNetwork {
                 users.add(user);
                 userMap.put(userID, user);
 
-                // ensure userIDCounter is greater than the last userID
-                if (userID >= userIdCounter) {
-                    userIdCounter = userID + 1;
+                // Keep track of the highest userID
+                if (userID > maxUserID) {
+                    maxUserID = userID;
                 }
 
                 // Read Friends
@@ -163,6 +164,9 @@ public class SocialNetwork {
                     }
                 }
             }
+            // Set userIdCounter to the next available ID
+            userIdCounter = maxUserID + 1;
+
             System.out.println("Data loaded successfully.");
             
         } catch (IOException e) {
@@ -209,8 +213,9 @@ public class SocialNetwork {
 
     public boolean saveUserToFile(String fileName, String username, String hometown, String workplace, String password) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
-            // assign the next available ID
-            int userID = userIdCounter;
+            int lastID = getLastUserID(fileName); // Get last used ID
+            int userID = lastID + 1; // Assign next available ID
+            
             writer.newLine();
             writer.write(userID + "," + username + "," + hometown + "," + workplace + "," + password);
             writer.newLine();
@@ -223,6 +228,37 @@ public class SocialNetwork {
         }
         return false;
     }
+
+    // get last user ID from the file
+    private int getLastUserID(String fileName) {
+        int maxID = 0;
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty() || !line.contains(",")) continue; // Ignore empty lines
+                
+                String[] userDetails = line.split(",");
+                if (userDetails.length >= 1) {
+                    try {
+                        int userID = Integer.parseInt(userDetails[0]);
+                        if (userID > maxID) {
+                            maxID = userID;
+                        }
+                    } catch (NumberFormatException e) {
+                        // Ignore invalid ID lines
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading user file to get last ID.");
+            e.printStackTrace();
+        }
+        
+        return maxID;
+    }
+    
 
     public String[] searchUser(String filename, String username) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
