@@ -8,6 +8,7 @@
 
 import java.awt.event.*;
 import javax.swing.*;
+import java.awt.*;
 
 public class Pages {
     public static void main(String[] args) {
@@ -411,7 +412,7 @@ class FindFriends {
 //################################################################
 class AddPost {
     static void addPost() {
-        JFrame frame = new JFrame();
+        JFrame frame = new JFrame("Add a Post");
         frame.setSize(500, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -421,18 +422,38 @@ class AddPost {
         panel.setLayout(null);
         frame.add(panel);
 
+        JLabel postLabel = new JLabel("Write your post:");
+        postLabel.setBounds(50, 50, 150, 30);
+        panel.add(postLabel);
+
         JTextField postInfo = new JTextField();
-        postInfo.setBounds(50, 100, 50, 30);
+        postInfo.setBounds(50, 100, 380, 150);
         postInfo.setBackground(new java.awt.Color(200, 200, 200));
         panel.add(postInfo);
 
-        JButton uploadPost = new JButton();
-        uploadPost.setBounds(50, 120, 50, 50);
+        JButton uploadPost = new JButton("Post");
+        uploadPost.setBounds(50, 270, 100, 40);
+        uploadPost.setBackground(new Color(100, 150, 200));
+        uploadPost.setForeground(Color.WHITE);
+        uploadPost.setFocusPainted(false);
+        panel.add(uploadPost);
+
         uploadPost.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String postInformation = postInfo.getText();
-                
+                String postContent = postInfo.getText();
+
+                // write save method to save post to social_network_data.txt
+                if (!postContent.isEmpty()){
+                    // save post to file
+                    // add user  id to this method 
+                    //savePostToFile("social_network_data.txt", !!!!, postContent);
+                    JOptionPane.showMessageDialog(frame, "Post uploaded successfully!");
+                    postInfo.setText(""); // Clear input field
+                }
+                else {
+                    JOptionPane.showMessageDialog(frame, "Post cannot be empty!");
+                }
             }
         });
         panel.add(uploadPost);
