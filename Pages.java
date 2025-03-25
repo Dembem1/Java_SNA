@@ -151,7 +151,7 @@ class RegistrationInfo {
 
                 SocialNetwork socialNetwork = new SocialNetwork();
                 if (socialNetwork.isUsernameValid("social_network_data.txt", username)) {
-                    if (socialNetwork.saveUserToFile("social_network_data.txt", 1, username, workplace, hometown, password)) {
+                    if (socialNetwork.saveUserToFile("social_network_data.txt", username, workplace, hometown, password)) {
                         Homepage.homepage();
                         frame.dispose();
                     } else {

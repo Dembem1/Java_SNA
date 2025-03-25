@@ -11,23 +11,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
-import javax.swing.JTextArea;
-
 import java.io.IOException;
 
 public class SocialNetwork {
     // add an arrayList to store all users
     private ArrayList<User> users;
+    private int userIdCounter = 1; // Start user IDs from 1
 
     // constructor
     public SocialNetwork() {
         this.users = new ArrayList<User>();
     }
 
-    // add a user to the list
-    public void addUser(User user) {
-        users.add(user);
+    // Add user and automatically assign an ID
+    public void addUser(String username, String workplace, String hometown, String password) {
+        User newUser = new User(userIdCounter, username, workplace, hometown, password);
+        users.add(newUser);
+        userIdCounter++; // Increment ID for the next user
     }
 
     // remove a user from the list
@@ -107,8 +107,8 @@ public class SocialNetwork {
         } catch (IOException e) {
             System.out.println("An error occurred while saving user data.");
             e.printStackTrace();
+            return false;
         }
-                return false;
     }    
 
     // load all users data from a file
@@ -124,6 +124,11 @@ public class SocialNetwork {
                 User user = new User(userID, userDetails[1], userDetails[2], userDetails[3], userDetails[4]);
                 users.add(user);
                 userMap.put(userID, user);
+
+                // ensure userIDCounter is greater than the last userID
+                if (userID >= userIdCounter) {
+                    userIdCounter = userID + 1;
+                }
 
                 // Read Friends
                 line = reader.readLine();
@@ -158,7 +163,7 @@ public class SocialNetwork {
                     }
                 }
             }
-            System.out.println("Social network data loaded successfully.");
+            System.out.println("Data loaded successfully.");
             
         } catch (IOException e) {
             System.out.println("Error loading data from file.");
@@ -202,12 +207,15 @@ public class SocialNetwork {
         return false;
     }
 
-    public boolean saveUserToFile(String fileName, int ID, String username, String hometown, String workplace, String password) {
+    public boolean saveUserToFile(String fileName, String username, String hometown, String workplace, String password) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
+            // assign the next available ID
+            int userID = userIdCounter;
             writer.newLine();
-            writer.write(ID + "," + username + "," + hometown + "," + workplace + "," + password);
+            writer.write(userID + "," + username + "," + hometown + "," + workplace + "," + password);
             writer.newLine();
             writer.flush();
+            userIdCounter++;
             return true;
         } catch (IOException e) {
             System.out.println("An error occurred while saving user data.");
