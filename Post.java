@@ -22,6 +22,12 @@ public class Post {
         likes = 0;
     }
 
+    public Post(int postID, String content, int likes){
+        this.postID = postID;
+        this.content = content;
+        this.likes = likes;
+    }
+
     // get methods
     public int getPostID(){
         return postID;

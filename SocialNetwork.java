@@ -7,7 +7,10 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -28,6 +31,89 @@ public class SocialNetwork {
         User newUser = new User(userIdCounter, username, workplace, hometown, password);
         users.add(newUser);
         userIdCounter++; // Increment ID for the next user
+    }
+
+    // get all user data by username and 'file name' method
+    public static User getUser(String filename, String username) {
+        Map<String, User> userMap = new HashMap<>(); // Store users by username
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            User currentUser = null;
+            FriendList friendList = new FriendList();
+            PostList postList = new PostList();
+
+            while ((line = reader.readLine()) != null) {
+                // Split user information
+                String[] userData = line.split(",");
+                if (userData.length < 5) continue; // Skip malformed lines
+                
+                int userID = Integer.parseInt(userData[0]);
+                String name = userData[1];
+                String workplace = userData[2];
+                String hometown = userData[3];
+                String password = userData[4];
+
+                // Create User object and store it in map (for resolving friends later)
+                User user = new User(userID, name, workplace, hometown, password, new FriendList(), new PostList());
+                userMap.put(name, user); 
+
+                if (name.equals(username)) {
+                    currentUser = user;
+                }
+            }
+
+            // If the user was found, go back through the file to fetch their friends and posts
+            if (currentUser != null) {
+                try (BufferedReader friendReader = new BufferedReader(new FileReader(filename))) {
+                    boolean readingFriends = false;
+                    
+                    while ((line = friendReader.readLine()) != null) {
+                        if (line.startsWith(currentUser.getUserID() + ",")) {
+                            readingFriends = true; // Start reading their friends/posts
+                            continue;
+                        }
+                        if (readingFriends) {
+                            if (line.startsWith("Friends:")) {
+                                String friendsData = line.substring(8).trim();
+                                if (!friendsData.isEmpty()) {
+                                    String[] friendNames = friendsData.split(";");
+                                    for (String friendName : friendNames) {
+                                        User friend = userMap.get(friendName.trim());
+                                        if (friend != null) {
+                                            friendList.addFriend(friend); // Add User object instead of String
+                                        }
+                                    }
+                                }
+                            } else if (line.startsWith("Posts:")) {
+                                String postsData = line.substring(6).trim();
+                                if (!postsData.isEmpty()) {
+                                    String[] posts = postsData.split(";");
+                                    for (String postData : posts) {
+                                        String[] postParts = postData.split("\\|");
+                                        if (postParts.length == 3) { // Ensure correct format
+                                            int postID = Integer.parseInt(postParts[0]);
+                                            String content = postParts[1];
+                                            int likes = Integer.parseInt(postParts[2]);
+                                            Post post = new Post(postID, content, likes);
+                                            postList.addPost(post);
+                                        }
+                                    }
+                                }
+                                break; // Stop reading once posts are found
+                            }
+                        }
+                    }
+                }
+
+                // Return user with populated friends and posts
+                return new User(currentUser.getUserID(), currentUser.getUsername(), currentUser.getWorkplace(),
+                        currentUser.getHometown(), currentUser.getPassword(), friendList, postList);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null; // Return null if user is not found
     }
 
     // remove a user from the list

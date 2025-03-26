@@ -21,6 +21,16 @@ public class User {
         this.friends = new FriendList();
         this.posts = new PostList();
     }
+    
+    public User(int userID, String username, String workplace, String hometown, String password, FriendList friends, PostList posts) {
+        this.userID = userID;
+        this.username = username;
+        this.workplace = workplace;
+        this.hometown = hometown;
+        this.password = password;
+        this.friends = new FriendList();
+        this.posts = new PostList();
+    }
 
     public int getUserID() {
         return userID;

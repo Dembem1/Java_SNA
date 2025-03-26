@@ -7,6 +7,8 @@
 // https://www.flaticon.com/
 
 import java.awt.event.*;
+import java.util.Set;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -59,7 +61,9 @@ class SingIn_Register {
                 String password = new String(passwordField.getPassword());
                 SocialNetwork socialNetwork = new SocialNetwork();
                 if (socialNetwork.isUserExist(username, password)) {
-                    Homepage.homepage();
+                    // add user to the social network
+                    User user = socialNetwork.getUser("social_network_data.txt", username);
+                    Homepage.homepage(user);
                     frame.dispose();
                 } else {
                     JOptionPane.showMessageDialog(frame, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
@@ -153,7 +157,8 @@ class RegistrationInfo {
                 SocialNetwork socialNetwork = new SocialNetwork();
                 if (socialNetwork.isUsernameValid("social_network_data.txt", username)) {
                     if (socialNetwork.saveUserToFile("social_network_data.txt", username, workplace, hometown, password)) {
-                        Homepage.homepage();
+                        User user = Homepage.getLoggedInUser();
+                        Homepage.homepage(user);
                         frame.dispose();
                     } else {
                         JOptionPane.showMessageDialog(frame, "Failed to register", "Error", JOptionPane.ERROR_MESSAGE);
@@ -172,7 +177,11 @@ class RegistrationInfo {
 //######################## HOMEPAGE #############################################
 //###############################################################################
 class Homepage {
-    static void homepage() {
+    private static User loggedInUser;
+
+    static void homepage(User user) {
+        loggedInUser = user;
+
         JFrame frame = new JFrame("Homepage");
         frame.setSize(500, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -263,6 +272,10 @@ class Homepage {
         panel.add(userProfileButton);
 
         frame.add(panel);
+    }
+
+    public static User getLoggedInUser() {
+        return loggedInUser; // Retrieve the user from any other page
     }
 }
 //###############################################################################
@@ -358,7 +371,8 @@ class FindFriends {
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Homepage.homepage();
+                User user = Homepage.getLoggedInUser();
+                Homepage.homepage(user);
                 frame.dispose();
             }
         });
@@ -437,6 +451,7 @@ class AddPost {
         uploadPost.setForeground(Color.WHITE);
         uploadPost.setFocusPainted(false);
         panel.add(uploadPost);
+        User user = Homepage.getLoggedInUser();
 
         uploadPost.addActionListener(new ActionListener() {
             @Override
@@ -447,7 +462,7 @@ class AddPost {
                 if (!postContent.isEmpty()){
                     // save post to file
                     // add user  id to this method 
-                    //savePostToFile("social_network_data.txt", !!!!, postContent);
+                    SocialNetwork.savePostToFile("social_network_data.txt", user.getUserID(), postContent);
                     JOptionPane.showMessageDialog(frame, "Post uploaded successfully!");
                     postInfo.setText(""); // Clear input field
                 }
@@ -468,7 +483,8 @@ class AddPost {
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Homepage.homepage();
+                
+                Homepage.homepage(user);
                 frame.dispose();
             }
         });
@@ -519,6 +535,8 @@ class AddPost {
 
 class Profile {
     static void profile() {
+        User user = Homepage.getLoggedInUser();
+
         JFrame frame = new JFrame("User Profile");
         frame.setSize(500, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -529,20 +547,51 @@ class Profile {
         panel.setLayout(null);
         frame.add(panel);
 
-        JTextField usernameField = new JTextField("Username");
-        usernameField.setBounds(50, 50, 400, 30);
+        JTextField userIDField = new JTextField("User ID: " + user.getUserID());
+        userIDField.setBounds(50, 50, 400, 30);
+        userIDField.setEditable(false);
+        panel.add(userIDField);
+
+        JTextField usernameField = new JTextField("Username: " + user.getUsername());
+        usernameField.setBounds(50, 100, 400, 30);
         usernameField.setEditable(false);
         panel.add(usernameField);
 
-        JTextField companyField = new JTextField("Company");
-        companyField.setBounds(50, 100, 400, 30);
+        JTextField companyField = new JTextField("Company: " + user.getWorkplace());
+        companyField.setBounds(50, 150, 400, 30);
         companyField.setEditable(false);
         panel.add(companyField);
 
-        JTextField cityField = new JTextField("City");
-        cityField.setBounds(50, 150, 400, 30);
+        JTextField cityField = new JTextField("City: " + user.getHometown());
+        cityField.setBounds(50, 200, 400, 30);
         cityField.setEditable(false);
         panel.add(cityField);
+
+        JTextField passwordField = new JTextField("Password: " + user.getPassword());
+        passwordField.setBounds(50, 250, 400, 30);
+        passwordField.setEditable(false);
+        panel.add(passwordField);
+
+         // Display Friends List
+         JTextArea friendsListArea = new JTextArea();
+         friendsListArea.setBounds(50, 300, 400, 150);
+         friendsListArea.setEditable(false);
+ 
+         // Get the Set of friends from FriendList
+         Set<User> friends = user.getFriends().getFriends(); // Get the Set<User> from FriendList
+ 
+         // Check if the user has friends and display them
+         if (friends.isEmpty()) {
+             friendsListArea.setText("No friends in your list.");
+         } else {
+             StringBuilder friendsListText = new StringBuilder("Friends List:\n");
+             // Iterate through the Set of friends and display their usernames
+             for (User friend : friends) {
+                 friendsListText.append(friend.getUsername()).append("\n");
+             }
+             friendsListArea.setText(friendsListText.toString());
+         }
+         panel.add(friendsListArea);
 
         ImageIcon homeIcon = new ImageIcon("Icons/home.png");
         JButton homeButton = new JButton(homeIcon);
@@ -554,7 +603,7 @@ class Profile {
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Homepage.homepage();
+                Homepage.homepage(user);
                 frame.dispose();
             }
         });
