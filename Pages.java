@@ -124,10 +124,10 @@ class SingIn_Register {
         // Create register button
         JButton registerButton = new JButton("Register");
         registerButton.setBounds(175, 385, 150, 30);
-        registerButton.setBorderPainted(false); // Remove button border
-        registerButton.setContentAreaFilled(false); // Make the button area transparent
-        registerButton.setFocusPainted(false); // Remove focus highlight
-        registerButton.setOpaque(false); // Ensure full transparency
+        registerButton.setBorderPainted(false); 
+        registerButton.setContentAreaFilled(false); 
+        registerButton.setFocusPainted(false); 
+        registerButton.setOpaque(false); 
         panel.add(registerButton);
 
         // Add action listener for the button
@@ -145,15 +145,9 @@ class SingIn_Register {
         appNameLabel.setFont(new Font("Times New Roman", Font.ITALIC, 26));
         appNameLabel.setForeground(new Color(32, 100, 114)); 
         panel.add(appNameLabel);
-
-        frame.add(panel); // Move this line here
+        frame.add(panel); 
         frame.setVisible(true);
-
-
-
-        // Add the panel to the frame
         frame.add(panel);
-
         // Make the frame visible
         frame.setVisible(true);
     }
@@ -253,14 +247,15 @@ class Homepage {
         panel.setBackground(new java.awt.Color(223, 223, 223));
         panel.setLayout(null);
 
+        //first post and username
         JTextField userName = new JTextField();
-        userName.setBounds(50, 100, 50, 30);
+        userName.setBounds(50, 50, 200, 30);
         userName.setBackground(new java.awt.Color(200, 200, 200));
         userName.setEditable(false);
         panel.add(userName);
 
         JTextField postContent = new JTextField();
-        postContent.setBounds(50, 200, 50, 100);
+        postContent.setBounds(50, 100, 400, 200);
         postContent.setBackground(new java.awt.Color(190, 190, 190));
         postContent.setEditable(false);
         panel.add(postContent);
@@ -274,6 +269,30 @@ class Homepage {
         } else {
             userName.setText("No users found");
             postContent.setText("");
+        }
+
+        //second post and username
+
+        JTextField userName2 = new JTextField();
+        userName2.setBounds(50, 350, 200, 30);
+        userName2.setBackground(new java.awt.Color(200, 200, 200));
+        userName2.setEditable(false);
+        panel.add(userName2);
+        
+        JTextField postContent2 = new JTextField();
+        postContent2.setBounds(50, 400, 400, 200);
+        postContent2.setBackground(new java.awt.Color(190, 190, 190));
+        postContent2.setEditable(false);
+        panel.add(postContent2);
+
+        String[] randomUserInfo2 = socialNetwork.getRandomUserPost("social_network_data.txt");
+        
+        if (randomUserInfo2.length > 1) {
+            userName2.setText(randomUserInfo2[0]);   // Set username
+            postContent2.setText(randomUserInfo2[1]); // Set post content
+        } else {
+            userName2.setText("No users found");
+            postContent2.setText("");
         }
 
         ImageIcon homeIcon = new ImageIcon("Icons/home3.png");
