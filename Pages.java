@@ -274,13 +274,13 @@ class Homepage {
         //second post and username
 
         JTextField userName2 = new JTextField();
-        userName2.setBounds(50, 350, 200, 30);
+        userName2.setBounds(80, 350, 200, 30);
         userName2.setBackground(new java.awt.Color(200, 200, 200));
         userName2.setEditable(false);
         panel.add(userName2);
 
         JLabel userIcon = new JLabel(new ImageIcon("Icons/user3.png"));
-        userIcon.setBounds(20, 350, 30, 30);
+        userIcon.setBounds(50, 350, 30, 30);
         panel.add(userIcon);
         
         int iconY = userName2.getBounds().y + (userName2.getBounds().height - userIcon.getBounds().height) / 2;
