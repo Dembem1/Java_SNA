@@ -87,9 +87,6 @@ class SingIn_Register {
         JPasswordField passwordField = new JPasswordField();
         passwordField.setBounds(150, 300, 200, 25);
         panel.add(passwordField);
-
-        JButton loginButton = Pages.createStyledButton("Login");
-        JTextField userText = Pages.createStyledTextField();
         
         JButton loginButton = new JButton("Login");
         loginButton.setBounds(175, 350, 150, 30);
