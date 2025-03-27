@@ -214,7 +214,7 @@ class Homepage {
             postContent.setText("");
         }
 
-        ImageIcon homeIcon = new ImageIcon("Icons/home2.png");
+        ImageIcon homeIcon = new ImageIcon("Icons/home3.png");
         JButton homeButton = new JButton(homeIcon);
         homeButton.setBounds(50, 700, 25, 25);
         homeButton.setBorderPainted(false);
@@ -223,7 +223,7 @@ class Homepage {
         homeButton.setOpaque(false);
         panel.add(homeButton);
 
-        ImageIcon findFriendsIcon = new ImageIcon("Icons/findFriends2.png");
+        ImageIcon findFriendsIcon = new ImageIcon("Icons/findFriends3.png");
         JButton findFriendsButton = new JButton(findFriendsIcon);
         findFriendsButton.setBounds(150, 700, 25, 25);
         findFriendsButton.setBorderPainted(false);
@@ -239,7 +239,7 @@ class Homepage {
         });
         panel.add(findFriendsButton);
 
-        ImageIcon addPostIcon = new ImageIcon("Icons/addPost2.png");
+        ImageIcon addPostIcon = new ImageIcon("Icons/addPost3.png");
         JButton addPostButton = new JButton(addPostIcon);
         addPostButton.setBounds(250, 700, 25, 25);
         addPostButton.setBorderPainted(false);
@@ -255,7 +255,7 @@ class Homepage {
         });
         panel.add(addPostButton);
 
-        ImageIcon userProfileIcon = new ImageIcon("Icons/userProfile2.png");
+        ImageIcon userProfileIcon = new ImageIcon("Icons/userProfile3.png");
         JButton userProfileButton = new JButton(userProfileIcon);
         userProfileButton.setBounds(350, 700, 25, 25);
         userProfileButton.setBorderPainted(false);
@@ -324,7 +324,7 @@ class FindFriends {
         userDetailArea.setEditable(false);
         panel.add(userDetailArea);
 
-        ImageIcon searchIcon = new ImageIcon("Icons/search2.png");
+        ImageIcon searchIcon = new ImageIcon("Icons/search3.png");
         JButton searchButton = new JButton(searchIcon);
         searchButton.setBounds(250, 50, 25, 25);
         searchButton.setBorderPainted(false);
@@ -361,7 +361,7 @@ class FindFriends {
 
   
 
-        ImageIcon homeIcon = new ImageIcon("Icons/home2.png");
+        ImageIcon homeIcon = new ImageIcon("Icons/home3.png");
         JButton homeButton = new JButton(homeIcon);
         homeButton.setBounds(50, 700, 25, 25);
         homeButton.setBorderPainted(false);
@@ -378,7 +378,7 @@ class FindFriends {
         });
         panel.add(homeButton);
 
-        ImageIcon findFriendsIcon = new ImageIcon("Icons/findFriends2.png");
+        ImageIcon findFriendsIcon = new ImageIcon("Icons/findFriends3.png");
         JButton findFriendsButton = new JButton(findFriendsIcon);
         findFriendsButton.setBounds(150, 700, 25, 25);
         findFriendsButton.setBorderPainted(false);
@@ -387,7 +387,7 @@ class FindFriends {
         findFriendsButton.setOpaque(false);
         panel.add(findFriendsButton);
 
-        ImageIcon addPostIcon = new ImageIcon("Icons/addPost2.png");
+        ImageIcon addPostIcon = new ImageIcon("Icons/addPost3.png");
         JButton addPostButton = new JButton(addPostIcon);
         addPostButton.setBounds(250, 700, 25, 25);
         addPostButton.setBorderPainted(false);
@@ -403,7 +403,7 @@ class FindFriends {
         });
         panel.add(addPostButton);
 
-        ImageIcon userProfileIcon = new ImageIcon("Icons/userProfile2.png");
+        ImageIcon userProfileIcon = new ImageIcon("Icons/userProfile3.png");
         JButton userProfileButton = new JButton(userProfileIcon);
         userProfileButton.setBounds(350, 700, 25, 25);
         userProfileButton.setBorderPainted(false);
@@ -473,7 +473,7 @@ class AddPost {
         });
         panel.add(uploadPost);
 
-        ImageIcon homeIcon = new ImageIcon("Icons/home2.png");
+        ImageIcon homeIcon = new ImageIcon("Icons/home3.png");
         JButton homeButton = new JButton(homeIcon);
         homeButton.setBounds(50, 700, 25, 25);
         homeButton.setBorderPainted(false);
@@ -490,7 +490,7 @@ class AddPost {
         });
         panel.add(homeButton);
 
-        ImageIcon findFriendsIcon = new ImageIcon("Icons/findFriends2.png");
+        ImageIcon findFriendsIcon = new ImageIcon("Icons/findFriends3.png");
         JButton findFriendsButton = new JButton(findFriendsIcon);
         findFriendsButton.setBounds(150, 700, 25, 25);
         findFriendsButton.setBorderPainted(false);
@@ -506,7 +506,7 @@ class AddPost {
         });
         panel.add(findFriendsButton);
 
-        ImageIcon addPostIcon = new ImageIcon("Icons/addPost2.png");
+        ImageIcon addPostIcon = new ImageIcon("Icons/addPost3.png");
         JButton addPostButton = new JButton(addPostIcon);
         addPostButton.setBounds(250, 700, 25, 25);
         addPostButton.setBorderPainted(false);
@@ -515,7 +515,7 @@ class AddPost {
         addPostButton.setOpaque(false);
         panel.add(addPostButton);
 
-        ImageIcon userProfileIcon = new ImageIcon("Icons/userProfile2.png");
+        ImageIcon userProfileIcon = new ImageIcon("Icons/userProfile3.png");
         JButton userProfileButton = new JButton(userProfileIcon);
         userProfileButton.setBounds(350, 700, 25, 25);
         userProfileButton.setBorderPainted(false);
@@ -593,7 +593,7 @@ class Profile {
          }
          panel.add(friendsListArea);
 
-        ImageIcon homeIcon = new ImageIcon("Icons/home2.png");
+        ImageIcon homeIcon = new ImageIcon("Icons/home3.png");
         JButton homeButton = new JButton(homeIcon);
         homeButton.setBounds(50, 700, 25, 25);
         homeButton.setBorderPainted(false);
@@ -609,7 +609,7 @@ class Profile {
         });
         panel.add(homeButton);
 
-        ImageIcon findFriendsIcon = new ImageIcon("Icons/findFriends2.png");
+        ImageIcon findFriendsIcon = new ImageIcon("Icons/findFriends3.png");
         JButton findFriendsButton = new JButton(findFriendsIcon);
         findFriendsButton.setBounds(150, 700, 25, 25);
         findFriendsButton.setBorderPainted(false);
@@ -625,7 +625,7 @@ class Profile {
         });
         panel.add(findFriendsButton);
 
-        ImageIcon addPostIcon = new ImageIcon("Icons/addPost2.png");
+        ImageIcon addPostIcon = new ImageIcon("Icons/addPost3.png");
         JButton addPostButton = new JButton(addPostIcon);
         addPostButton.setBounds(250, 700, 25, 25);
         addPostButton.setBorderPainted(false);
@@ -641,7 +641,7 @@ class Profile {
         });
         panel.add(addPostButton);
 
-        ImageIcon userProfileIcon = new ImageIcon("Icons/userProfile2.png");
+        ImageIcon userProfileIcon = new ImageIcon("Icons/userProfile3.png");
         JButton userProfileButton = new JButton(userProfileIcon);
         userProfileButton.setBounds(350, 700, 25, 25);
         userProfileButton.setBorderPainted(false);
