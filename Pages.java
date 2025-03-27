@@ -19,19 +19,31 @@ public class Pages {
     static final Color TEXT_COLOR = new Color(0x000000);
 
     // fonts
-    static final Font HEADER_FONT = new Font("Inter", Font.BOLD, 24);
-    static final Font BODY_FONT = new Font("Inter", Font.PLAIN, 16);
+    static final Font HEADER_FONT = new Font("Montserrat", Font.BOLD, 24);
+    static final Font BODY_FONT = new Font("Montserrat", Font.PLAIN, 16);
 
     // styled buttons
     public static JButton createStyledButton(String text) {
         JButton button = new JButton(text);
         button.setFont(BODY_FONT);
         button.setForeground(TEXT_COLOR);
-        button.setBackground(BUTTON_COLOR);
-        button.setBorderPainted(false);
-        button.setFocusPainted(false);
+        button.setBackground(new Color(0xADD8E6)); // light blue color
+        button.setBorder(BorderFactory.createEmptyBorder(10, 20, 0, 20));
+        button.setContentAreaFilled(false);
+        button.setOpaque(true);
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                button.setBackground(new Color(0x87CEEB)); // darker light blue color
+            }
+    
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button.setBackground(new Color(0xADD8E6)); // light blue color
+            }
+        });
         return button;
-    }
+}
 
     // styled text fields
     public static JTextField createStyledTextField() {
@@ -67,7 +79,7 @@ class SingIn_Register {
 
         // Create a panel to hold components
         JPanel panel = new JPanel();
-        panel.setBackground(new java.awt.Color(245, 235, 224));
+        panel.setBackground(new java.awt.Color(223, 223, 223));
         panel.setLayout(null);
 
         // Create username label and text field
@@ -88,9 +100,8 @@ class SingIn_Register {
         passwordField.setBounds(150, 300, 200, 25);
         panel.add(passwordField);
         
-        JButton loginButton = new JButton("Login");
+        JButton loginButton = Pages.createStyledButton("Login");
         loginButton.setBounds(175, 350, 150, 30);
-        loginButton.setBackground(new java.awt.Color(214, 204, 194));
         panel.add(loginButton);
 
         loginButton.addActionListener(new ActionListener() {
@@ -146,15 +157,15 @@ class RegistrationInfo {
         frame.setVisible(true);
 
         JPanel panel = new JPanel();
-        panel.setBackground(new java.awt.Color(245, 235, 224));
+        panel.setBackground(new java.awt.Color(223, 223, 223));
         panel.setLayout(null);
 
         JLabel userLabel = new JLabel("Username:");
         userLabel.setBounds(150, 100, 200, 25);
         panel.add(userLabel);
 
-        JTextField userText = new JTextField();
-        userText.setBounds(150, 130, 200, 25);
+        JTextField userText = Pages.createStyledTextField();
+        userText.setBounds(150, 230, 200, 25);
         panel.add(userText);
 
         // Create password label and password field
@@ -184,7 +195,7 @@ class RegistrationInfo {
 
         JButton registerButton = new JButton("Register");
         registerButton.setBounds(175, 400, 150, 30);
-        registerButton.setBackground(new java.awt.Color(214, 204, 194));
+        panel.setBackground(new java.awt.Color(223, 223, 223));
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -227,7 +238,7 @@ class Homepage {
         frame.setVisible(true);
 
         JPanel panel = new JPanel();
-        panel.setBackground(new java.awt.Color(245, 235, 224));
+        panel.setBackground(new java.awt.Color(223, 223, 223));
         panel.setLayout(null);
 
         JTextField userName = new JTextField();
@@ -328,7 +339,7 @@ class FindFriends {
         frame.setVisible(true);
 
         JPanel panel = new JPanel();
-        panel.setBackground(new java.awt.Color(245, 235, 224));
+        panel.setBackground(new java.awt.Color(223, 223, 223));
         panel.setLayout(null);
 
         JTextField searchField = new JTextField("Search");
@@ -471,7 +482,7 @@ class AddPost {
         frame.setVisible(true);
 
         JPanel panel = new JPanel();
-        panel.setBackground(new java.awt.Color(245, 235, 224));
+        panel.setBackground(new java.awt.Color(223, 223, 223));
         panel.setLayout(null);
         frame.add(panel);
 
@@ -582,7 +593,7 @@ class Profile {
         frame.setVisible(true);
 
         JPanel panel = new JPanel();
-        panel.setBackground(new java.awt.Color(245, 235, 224));
+        panel.setBackground(new java.awt.Color(223, 223, 223));
         panel.setLayout(null);
         frame.add(panel);
 
