@@ -176,8 +176,8 @@ class RegistrationInfo {
         userLabel.setBounds(150, 100, 200, 25);
         panel.add(userLabel);
 
-        JTextField userText = Pages.createStyledTextField();
-        userText.setBounds(150, 130, 200, 20);
+        JTextField userText = new JTextField();
+        userText.setBounds(150, 130, 200, 25);
         panel.add(userText);
 
         // Create password label and password field
