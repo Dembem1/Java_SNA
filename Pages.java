@@ -123,7 +123,7 @@ class SingIn_Register {
 
         // Create register button
         JButton registerButton = new JButton("Register");
-        registerButton.setBounds(175, 375, 150, 30);
+        registerButton.setBounds(175, 385, 150, 30);
         registerButton.setBorderPainted(false); // Remove button border
         registerButton.setContentAreaFilled(false); // Make the button area transparent
         registerButton.setFocusPainted(false); // Remove focus highlight
@@ -138,6 +138,18 @@ class SingIn_Register {
                 frame.dispose();
             }
         });
+
+        // Label for the app name
+        JLabel appNameLabel = new JLabel("Socialise YS");
+        appNameLabel.setBounds(180, 680, 200, 50); 
+        appNameLabel.setFont(new Font("Times New Roman", Font.ITALIC, 26));
+        appNameLabel.setForeground(new Color(32, 100, 114)); 
+        panel.add(appNameLabel);
+
+        frame.add(panel); // Move this line here
+        frame.setVisible(true);
+
+
 
         // Add the panel to the frame
         frame.add(panel);
