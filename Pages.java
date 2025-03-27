@@ -249,10 +249,17 @@ class Homepage {
 
         //first post and username
         JTextField userName = new JTextField();
-        userName.setBounds(50, 50, 200, 30);
+        userName.setBounds(80, 50, 200, 30);
         userName.setBackground(new java.awt.Color(200, 200, 200));
-        userName.setEditable(false);
+        userName.setEditable(true);
         panel.add(userName);
+        
+        JLabel userIcon1 = new JLabel(new ImageIcon("Icons/user3.png"));
+        userIcon1.setBounds(50, 50, 30, 30);
+        panel.add(userIcon1);
+        
+        int iconY1 = userName.getBounds().y + (userName.getBounds().height - userIcon1.getBounds().height) / 2;
+        userIcon1.setBounds(50, iconY1, 30, 30);
 
         JTextField postContent = new JTextField();
         postContent.setBounds(50, 100, 400, 200);
@@ -279,11 +286,12 @@ class Homepage {
         userName2.setEditable(false);
         panel.add(userName2);
 
-        JLabel userIcon = new JLabel(new ImageIcon("Icons/user3.png"));
-        userIcon.setBounds(50, 350, 30, 30);
-        panel.add(userIcon);
+        JLabel userIcon2 = new JLabel(new ImageIcon("Icons/user3.png"));
+        userIcon2.setBounds(50, 350, 30, 30);
+        panel.add(userIcon2);
         
-        int iconY = userName2.getBounds().y + (userName2.getBounds().height - userIcon.getBounds().height) / 2;
+        int iconY2 = userName2.getBounds().y + (userName2.getBounds().height - userIcon2.getBounds().height) / 2;
+        userIcon2.setBounds(50, iconY2, 30, 30);
         
         JTextField postContent2 = new JTextField();
         postContent2.setBounds(50, 400, 400, 200);
