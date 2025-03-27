@@ -13,10 +13,49 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Pages {
+    // colors
+    static final Color BACKGROUND_COLOR = new Color(0xDFDFDF);
+    static final Color BUTTON_COLOR = new Color(0xD6CCC2);
+    static final Color TEXT_COLOR = new Color(0x000000);
+
+    // fonts
+    static final Font HEADER_FONT = new Font("Inter", Font.BOLD, 24);
+    static final Font BODY_FONT = new Font("Inter", Font.PLAIN, 16);
+
+    // styled buttons
+    public static JButton createStyledButton(String text) {
+        JButton button = new JButton(text);
+        button.setFont(BODY_FONT);
+        button.setForeground(TEXT_COLOR);
+        button.setBackground(BUTTON_COLOR);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        return button;
+    }
+
+    // styled text fields
+    public static JTextField createStyledTextField() {
+        JTextField textField = new JTextField();
+        textField.setFont(BODY_FONT);
+        textField.setForeground(TEXT_COLOR);
+        textField.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(Color.GRAY),
+            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        return textField;
+    }
+
     public static void main(String[] args) {
-        SingIn_Register.SingIn_Register();
+        SwingUtilities.invokeLater(() -> {
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            SingIn_Register.SingIn_Register();
+        });
     }
 }
+
 //###############################################################################
 //######################## SING IN AND REGISTER PAGES ###########################
 //###############################################################################
