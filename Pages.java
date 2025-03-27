@@ -278,6 +278,12 @@ class Homepage {
         userName2.setBackground(new java.awt.Color(200, 200, 200));
         userName2.setEditable(false);
         panel.add(userName2);
+
+        JLabel userIcon = new JLabel(new ImageIcon("Icons/user3.png"));
+        userIcon.setBounds(20, 350, 30, 30);
+        panel.add(userIcon);
+        
+        int iconY = userName2.getBounds().y + (userName2.getBounds().height - userIcon.getBounds().height) / 2;
         
         JTextField postContent2 = new JTextField();
         postContent2.setBounds(50, 400, 400, 200);
