@@ -407,14 +407,24 @@ class FindFriends {
         });
         panel.add(searchField);
 
-        JTextArea userArea = new JTextArea("");
-        userArea.setBounds(50, 70, 100, 100);
-        userArea.setBackground(new java.awt.Color(227, 213, 202));
-        userArea.setEditable(false);
-        panel.add(userArea);
 
+        JLabel usernameLabel = new JLabel("Username: ");
+        usernameLabel.setBounds(50, 100, 100, 20);
+        panel.add(usernameLabel);
+        
+        JTextArea userArea = new JTextArea("");
+        userArea.setBounds(150, 100, 250, 20);
+        userArea.setBackground(new java.awt.Color(227, 213, 202));
+        panel.add(userArea);
+        
+        JPanel userInfoPanel = new JPanel();
+        userInfoPanel.setBounds(50, 250, 500, 250);
+        userInfoPanel.setBackground(new java.awt.Color(227, 213, 202));
+        userInfoPanel.setLayout(new GridLayout(2, 1));
+        panel.add(userInfoPanel);
+        
         JTextArea userDetailArea = new JTextArea("");
-        userDetailArea.setBounds(50, 170, 100, 100);
+        userDetailArea.setBounds(50, 350, 350, 120);
         userDetailArea.setBackground(new java.awt.Color(227, 213, 202));
         userDetailArea.setEditable(false);
         panel.add(userDetailArea);
