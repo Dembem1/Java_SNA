@@ -384,9 +384,10 @@ class FindFriends {
         frame.setVisible(true);
 
         JPanel panel = new JPanel();
-        panel.setBackground(new java.awt.Color(223, 223, 223));
+        panel.setBackground(new Color(223, 223, 223));
         panel.setLayout(null);
 
+        // Search Field
         JTextField searchField = new JTextField("Search");
         searchField.setBounds(50, 50, 200, 25);
         searchField.addFocusListener(new FocusListener() {
@@ -401,131 +402,140 @@ class FindFriends {
             public void focusLost(FocusEvent e) {
                 if (searchField.getText().isEmpty()) {
                     searchField.setText("Search");
-                    
                 }
             }
         });
         panel.add(searchField);
 
-
-        JLabel usernameLabel = new JLabel("Username: ");
+        // Username Label
+        JLabel usernameLabel = new JLabel("Username:");
         usernameLabel.setBounds(50, 100, 100, 20);
         panel.add(usernameLabel);
-        
+
         JTextArea userArea = new JTextArea("");
         userArea.setBounds(150, 100, 250, 20);
-        userArea.setBackground(new java.awt.Color(227, 213, 202));
+        userArea.setBackground(new Color(227, 213, 202));
+        userArea.setEditable(false);
         panel.add(userArea);
-        
-        JPanel userInfoPanel = new JPanel();
-        userInfoPanel.setBounds(50, 250, 500, 250);
-        userInfoPanel.setBackground(new java.awt.Color(227, 213, 202));
-        userInfoPanel.setLayout(new GridLayout(2, 1));
-        panel.add(userInfoPanel);
-        
-        JTextArea userDetailArea = new JTextArea("");
-        userDetailArea.setBounds(50, 350, 350, 120);
-        userDetailArea.setBackground(new java.awt.Color(227, 213, 202));
-        userDetailArea.setEditable(false);
-        panel.add(userDetailArea);
 
+        // User Info Panel
+        JPanel userInfoPanel = new JPanel();
+        userInfoPanel.setBounds(50, 150, 400, 200);
+        userInfoPanel.setBackground(new Color(227, 213, 202));
+        userInfoPanel.setLayout(new GridLayout(4, 2));
+
+        JLabel nameLabel = new JLabel("Name:");
+        JLabel nameValueLabel = new JLabel("-");
+
+        JLabel ageLabel = new JLabel("Age:");
+        JLabel ageValueLabel = new JLabel("-");
+
+        JLabel locationLabel = new JLabel("Location:");
+        JLabel locationValueLabel = new JLabel("-");
+
+        userInfoPanel.add(nameLabel);
+        userInfoPanel.add(nameValueLabel);
+
+        userInfoPanel.add(ageLabel);
+        userInfoPanel.add(ageValueLabel);
+
+        userInfoPanel.add(locationLabel);
+        userInfoPanel.add(locationValueLabel);
+
+        panel.add(userInfoPanel);
+
+        // Search Button
         ImageIcon searchIcon = new ImageIcon("Icons/search3.png");
         JButton searchButton = new JButton(searchIcon);
         searchButton.setBounds(250, 50, 25, 25);
         searchButton.setBorderPainted(false);
         searchButton.setContentAreaFilled(false);
         searchButton.setFocusPainted(false);
-        searchButton.setOpaque(false);
-        searchButton.addActionListener(new ActionListener() {
+        
+	searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SocialNetwork socialNetwork = new SocialNetwork();
                 String searchUsername = searchField.getText();
                 String[] userDetails = socialNetwork.searchUser("social_network_data.txt", searchUsername);
-                if (!userDetails.equals("User not found")) {
+
+                if (!userDetails[0].equals("User not found")) {
                     userArea.setText(userDetails[1]);
-                    userDetailArea.setText(
-                        userDetails[0] + 
-                        userDetails[2] + 
-                        userDetails[3] + 
-                        userDetails[4]
-                    );
-                    //JOptionPane.showMessageDialog(frame, "User found", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    nameValueLabel.setText(userDetails[0]);
+                    ageValueLabel.setText(userDetails[2]);
+                    locationValueLabel.setText(userDetails[3]);
                 } else {
                     userArea.setText("User not found");
-                    userDetailArea.setText("No user info");
-                    //JOptionPane.showMessageDialog(frame, "User not found", "Error", JOptionPane.ERROR_MESSAGE);
+                    nameValueLabel.setText("-");
+                    ageValueLabel.setText("-");
+                    locationValueLabel.setText("-");
+                    JOptionPane.showMessageDialog(frame, "User not found", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                userArea.revalidate();
-                userArea.repaint();
-                userDetailArea.revalidate();
-                userDetailArea.repaint();
             }
         });
-        panel.add(searchButton);
+        
+	panel.add(searchButton);
 
-  
+	// Navigation Buttons
+	ImageIcon homeIcon = new ImageIcon("Icons/home3.png");
+	JButton homeButton = new JButton(homeIcon);
+	homeButton.setBounds(50, 700, 25, 25);
+	homeButton.setBorderPainted(false);
+	homeButton.setContentAreaFilled(false);
+	homeButton.setFocusPainted(false);
+	homeButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+	        User user = Homepage.getLoggedInUser();
+	        Homepage.homepage(user);
+	        frame.dispose();
+	    }
+	});
+	panel.add(homeButton);
 
-        ImageIcon homeIcon = new ImageIcon("Icons/home3.png");
-        JButton homeButton = new JButton(homeIcon);
-        homeButton.setBounds(50, 700, 25, 25);
-        homeButton.setBorderPainted(false);
-        homeButton.setContentAreaFilled(false);
-        homeButton.setFocusPainted(false);
-        homeButton.setOpaque(false);
-        homeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                User user = Homepage.getLoggedInUser();
-                Homepage.homepage(user);
-                frame.dispose();
-            }
-        });
-        panel.add(homeButton);
+	ImageIcon findFriendsIcon = new ImageIcon("Icons/findFriends3.png");
+	JButton findFriendsButton = new JButton(findFriendsIcon);
+	findFriendsButton.setBounds(150, 700, 25, 25);
+	findFriendsButton.setBorderPainted(false);
+	findFriendsButton.setContentAreaFilled(false);
+	findFriendsButton.setFocusPainted(false); // Current page button
+	panel.add(findFriendsButton);
 
-        ImageIcon findFriendsIcon = new ImageIcon("Icons/findFriends3.png");
-        JButton findFriendsButton = new JButton(findFriendsIcon);
-        findFriendsButton.setBounds(150, 700, 25, 25);
-        findFriendsButton.setBorderPainted(false);
-        findFriendsButton.setContentAreaFilled(false);
-        findFriendsButton.setFocusPainted(false);
-        findFriendsButton.setOpaque(false);
-        panel.add(findFriendsButton);
+	ImageIcon addPostIcon = new ImageIcon("Icons/addPost3.png");
+	JButton addPostButton = new JButton(addPostIcon);
+	addPostButton.setBounds(250, 700, 25, 25);
+	addPostButton.setBorderPainted(false);
+	addPostButton.setContentAreaFilled(false);
+	addPostButton.setFocusPainted(false);
+	addPostButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+	        AddPost.addPost();
+	        frame.dispose();
+	    }
+	});
+	panel.add(addPostButton);
 
-        ImageIcon addPostIcon = new ImageIcon("Icons/addPost3.png");
-        JButton addPostButton = new JButton(addPostIcon);
-        addPostButton.setBounds(250, 700, 25, 25);
-        addPostButton.setBorderPainted(false);
-        addPostButton.setContentAreaFilled(false);
-        addPostButton.setFocusPainted(false);
-        addPostButton.setOpaque(false);
-        addPostButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AddPost.addPost();
-                frame.dispose();
-            }
-        });
-        panel.add(addPostButton);
+	ImageIcon userProfileIcon = new ImageIcon("Icons/userProfile3.png");
+	JButton userProfileButton = new JButton(userProfileIcon);
+	userProfileButton.setBounds(350, 700, 25, 25);
+	userProfileButton.setBorderPainted(false);
+	userProfileButton.setContentAreaFilled(false);
+	userProfileButton.setFocusPainted(false);
+	userProfileButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+	        Profile.profile();
+	        frame.dispose();
+	    }
+	});
+	panel.add(userProfileButton);
 
-        ImageIcon userProfileIcon = new ImageIcon("Icons/userProfile3.png");
-        JButton userProfileButton = new JButton(userProfileIcon);
-        userProfileButton.setBounds(350, 700, 25, 25);
-        userProfileButton.setBorderPainted(false);
-        userProfileButton.setContentAreaFilled(false);
-        userProfileButton.setFocusPainted(false);
-        userProfileButton.setOpaque(false);
-        userProfileButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Profile.profile();
-                frame.dispose();
-            }
-        });
-        panel.add(userProfileButton);
-        frame.add(panel);
+	// Add panel to frame
+	frame.add(panel);
     }
 }
+
 //################################################################
 //################## ADD POST PAGE ###############################
 //################################################################
